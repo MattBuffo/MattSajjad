@@ -21,10 +21,19 @@ public class Barcode {
 		zipCodeWithCheck = null;
 		zipCode = null;
 	}
-	public Barcode(String barCode){
+	/**Constructs a Barcode object with the instance element barCode set to the passed string with the first and last characters removed
+	 * 
+	 * @param code barcode string from ZipBarCodes.txt
+	 */
+	public Barcode(String code){
+		barCode = code.substring(1, code.length() -1);
+	}
+	private void checkSum() {
 		
 	}
-	public void checkSum() {
-		
+	private void convertToSegments(){
+		for(int i = 0; i < barCode.length(); i ++) {
+			barCodeAsSegments[i/5] =  0; //FIX THIS;
+		}
 	}
 }
