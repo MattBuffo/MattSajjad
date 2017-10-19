@@ -1,17 +1,28 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class ZipCode {
 
 	private String zipCode;
-	private Location[] Place = new Location[25];
+	private Location[] place;
 	
-	public ZipCode()
+	public ZipCode(String code)
 	{
-		
+		place = new Location[25];
+		zipCode = code;
 	}
 	
-	public String getZipCode(String code)
+	public String getZipCode(File ZipCodes) throws FileNotFoundException
 	{
-		
+		Scanner zipReader = new Scanner(System.in);
+		File file = new File(zipReader.nextLine());
+		zipReader = new Scanner(ZipCodes);
+		while (zipReader.hasNext()){
+			zipCode = zipReader.next();
+		}
+		zipReader.close();
+		return zipCode;
 	}
 	
 	public String getLocation()
@@ -29,10 +40,10 @@ public class ZipCode {
 		
 	}
 
-	public String getZipCode() {
+/*	public String getZipCode() {
 		return zipCode;
 	}
-
+*/
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
