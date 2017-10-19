@@ -18,6 +18,6 @@ public class Client {
 	private File ZipCodesCity = new File("ZipCodesCity.txt");
 	private File ZipBarCodes = new File("ZipBarCodes.txt");
 	public static void main(String[] args) {
-		
+		Barcode test = new Barcode("||:|:::||::||:::::||:|:|::::||:|");
 	}
 }
