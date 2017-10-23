@@ -25,14 +25,33 @@ public class ZipCode {
 		return zipCode;
 	}
 	
-	public String getLocation()
+	public String getLocation(File ZipCodesCity)
 	{
-		
+		Scanner cityReader = new Scanner(System.in);
+		File file = new File(cityReader.nextLine());
+		cityReader = new Scanner(ZipCodesCity);
+		while (cityReader.hasNext()) {
+			place = cityReader.next();
+		}
 	}
 	
 	public String convertToBarcode()
 	{
+		String barcodeDigit;
+		switch (barcodeCreator) {
+			case 0: barcodeDigit = ":::||";
+			case 1: barcodeDigit = "::|:|";
+			case 2: barcodeDigit = "";
+			case 3: barcodeDigit = "";
+			case 4: barcodeDigit = "";
+			case 5: barcodeDigit = "";
+			case 6: barcodeDigit = "";
+			case 7: barcodeDigit = "";
+			case 8: barcodeDigit = "";
+			case 9: barcodeDigit = "";
+			default: barcodeDigit = "Invalid Input";
 		
+		}
 	}
 	
 	public String toString()
