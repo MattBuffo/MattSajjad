@@ -11,14 +11,21 @@
  * @version 2.0
  */
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Client {
-	private File ZipCodes = new File("ZipCodes.txt");
-	private File ZipCodesCity = new File("ZipCodesCity.txt");
-	private File ZipBarCodes = new File("ZipBarCodes.txt");
-	private ZipCode[] zipCodeArray = new ZipCode[10];
-	public static void main(String[] args) {
-		
+	
+	public static void main(String[] args) throws FileNotFoundException{
+		File ZipCodes = new File("ZipCodes.txt");
+		File ZipCodesCity = new File("ZipCodesCity.txt");
+		File ZipBarCodes = new File("ZipBarCodes.txt");
+		ZipCode[] zipCodeArray = new ZipCode[10];
+		Barcode[] barCodeArray = new Barcode[10];
+		Scanner in = new Scanner(ZipBarCodes);
+		for(Barcode bar : barCodeArray) {
+			bar = new Barcode(in.next());
+			System.out.println(bar);
+		}
 	}
 }
