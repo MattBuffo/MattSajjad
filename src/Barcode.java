@@ -19,7 +19,11 @@ public class Barcode {
 		barCodeAsSegments = null;
 		checkSum = true;
 		zipCodeWithCheck = "";
-		zipCode = new ZipCode();
+		zipCode = new ZipCode(null);
+	}
+	//Constructors 
+	public Barcode(ZipCode code) {
+		
 	}
 	/**Constructs a Barcode object with the instance element barCode set to the passed string with the first and last characters removed
 	 * 
@@ -34,12 +38,48 @@ public class Barcode {
 		zipCodeWithCheck = "";
 		convertToSegments();
 		convertToZip();
-		System.out.println(zipCodeWithCheck);
 		checkSum();
-		System.out.println(checkSum);
+		if(checkSum) {
+			zipCode = new ZipCode(zipCodeWithCheck.substring(0, zipCodeWithCheck.length() -1));
+		}
 		
 	}
-	// Getter Methods
+	// Getter Methods (Accessor) 
+	/** Gets the zipCode Object
+	 * 
+	 * @return zipCode
+	 */
+	public ZipCode getZipCodeClass() {
+		return zipCode;
+	}
+	/** Returns true if valid zipcode and false if invalid 
+	 * 
+	 * @return checkSum
+	 */
+	public boolean getCheckSum() {
+		return checkSum;
+	}
+	/** Gets the barcode as a string 
+	 * 
+	 * @return barCode
+	 */
+	public String getBarCode() {
+		return barCode;
+	}
+	/** Gets the numeric zipcode represented by the barcode
+	 * 
+	 * @return numeric zip code derived from zipCodeWithCheck
+	 */
+	public String getZipCode() {
+		return zipCodeWithCheck.substring(0, zipCodeWithCheck.length() -1);
+	}
+	/**Gets zipCodeWithCheck instance variable
+	 * 
+	 * @return zipCodeWithCheck
+	 */
+	public String getZipCodeWithCheck() {
+		return zipCodeWithCheck;
+	}
 	/** Returns instance array of barcode segments
 	 * 
 	 * @return barCodeAsSegments
@@ -104,6 +144,23 @@ public class Barcode {
 				}
 				
 			
+		}
+	}
+	public String toString() {
+		if(!checkSum) {
+			return ("|" + barCode + "|" + "------>" + "ERROR: INVALID CHECKSUM");
+		}
+		else {
+			String returnStr = "";
+			returnStr += ("ZipCode: " + this.getZipCode() + "\n");
+			returnStr += ("Readable Barcode: |");
+			String[] tempBar = this.getBarCodeAsSegments();
+			for(String segment: tempBar) {
+				returnStr += segment;
+			}
+			returnStr += "| \n";
+			returnStr += ("Postal BarCode: " + "|" + this.getBarCode() + "|" + "\n");
+			return returnStr;
 		}
 	}
 }
