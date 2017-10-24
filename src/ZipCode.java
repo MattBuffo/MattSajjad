@@ -6,14 +6,17 @@ public class ZipCode {
 
 	private String zipCode;
 	private Location[] place;
-	
+	private String barcode;
+	private File ZipCodesCity;
+
 	public ZipCode(String code)
 	{
 		place = new Location[25];
 		zipCode = code;
+		ZipCodesCity = new File("ZipCodesCity.txt");
 	}
-	
-	public String getZipCode(File ZipCodes) throws FileNotFoundException
+
+	/**public String getZipCode(File ZipCodes) throws FileNotFoundException
 	{
 		Scanner zipReader = new Scanner(System.in);
 		File file = new File(zipReader.nextLine());
@@ -24,45 +27,46 @@ public class ZipCode {
 		zipReader.close();
 		return zipCode;
 	}
+**/ //redundant method
 	
-	public String getLocation(File ZipCodesCity)
+	private void setLocation()
 	{
 		Scanner cityReader = new Scanner(System.in);
 		File file = new File(cityReader.nextLine());
 		cityReader = new Scanner(ZipCodesCity);
+		for (int i = 0; i < place.length; i++ )
 		while (cityReader.hasNext()) {
-			place = cityReader.next();
+			String location = cityReader.next();
+			if (location.substring(0, 6).equals(zipCode)) {
+				place[i] = new Location(location);
+			}
 		}
-	}
-	
-	public String convertToBarcode()
-	{
-		String barcodeDigit;
-		switch (barcodeCreator) {
-			case 0: barcodeDigit = ":::||";
-			case 1: barcodeDigit = "::|:|";
-			case 2: barcodeDigit = "";
-			case 3: barcodeDigit = "";
-			case 4: barcodeDigit = "";
-			case 5: barcodeDigit = "";
-			case 6: barcodeDigit = "";
-			case 7: barcodeDigit = "";
-			case 8: barcodeDigit = "";
-			case 9: barcodeDigit = "";
-			default: barcodeDigit = "Invalid Input";
-		
-		}
-	}
-	
-	public String toString()
-	{
-		
 	}
 
-/*	public String getZipCode() {
+	public String convertToBarcode(int n)
+	{
+		switch (n) {
+		case 0: return ":::||";
+		case 1: return "::|:|";
+		case 2: return "::|:|";
+		case 3: return "::||:";
+		case 4: return ":|::|";
+		case 5: return ":|:|:";
+		case 6: return ":||::";
+		case 7: return "|:::|";
+		case 8: return "|::|:";
+		case 9: return "|:|::";
+		default: return "Invalid Input";
+
+		}
+	}
+
+	public String getBarcode()
+
+	/*	public String getZipCode() {
 		return zipCode;
 	}
-*/
+	 */
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
@@ -74,6 +78,26 @@ public class ZipCode {
 	public void setPlace(Location[] place) {
 		Place = place;
 	}
+
+	public String toString()
+	{
+		if(!checkSum) {
+			return ("|" + barCode + "|" + "------>" + "ERROR: INVALID CHECKSUM");
+		}
+		else {
+			String returnStr = "";
+			returnStr += ("ZipCode: " + this.getZipCode(File ZipCodes) + "\n");
+			returnStr += ("Postal BarCode: " + "|" + this.getBarCode() + "|" + "\n");
+			returnStr += ("Readable Barcode: | ");
+			String[] tempBar = this.getBarCodeAsSegments();
+			for(String segment: tempBar) {
+				returnStr += segment + " ";
+			}
+			returnStr += "| \n";
+			return returnStr;
+		}
+	}
+}
 
 
 }
