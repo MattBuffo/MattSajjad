@@ -17,7 +17,8 @@ public class Client {
 	private File ZipCodes = new File("ZipCodes.txt");
 	private File ZipCodesCity = new File("ZipCodesCity.txt");
 	private File ZipBarCodes = new File("ZipBarCodes.txt");
+	private ZipCode[] zipCodeArray = new ZipCode[10];
 	public static void main(String[] args) {
-		Barcode test = new Barcode("||:|:::||::||:::::||:|:|::::||:|");
+		
 	}
 }

@@ -153,13 +153,13 @@ public class Barcode {
 		else {
 			String returnStr = "";
 			returnStr += ("ZipCode: " + this.getZipCode() + "\n");
-			returnStr += ("Readable Barcode: |");
+			returnStr += ("Postal BarCode: " + "|" + this.getBarCode() + "|" + "\n");
+			returnStr += ("Readable Barcode: | ");
 			String[] tempBar = this.getBarCodeAsSegments();
 			for(String segment: tempBar) {
-				returnStr += segment;
+				returnStr += segment + " ";
 			}
 			returnStr += "| \n";
-			returnStr += ("Postal BarCode: " + "|" + this.getBarCode() + "|" + "\n");
 			return returnStr;
 		}
 	}
