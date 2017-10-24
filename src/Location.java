@@ -6,22 +6,13 @@ public class Location {
 	
 	public Location()
 	{
-		
+		city = "";
+		state = "";
 	}
-	
-	public Location(String city)
-	{
-		
-	}
-	
-	public Location(String state)
-	{
-		
-	}
-	
 	public Location(String location)
 	{
-		
+		city = location.substring(7, location.length() -3);
+		state = location.substring(location.length()-2);
 	}
 
 	public String getState() {
@@ -39,10 +30,9 @@ public class Location {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
 	public String toString()
 	{
-		return (city + ", " + state);
+		return (city + ", " + state + "\n");
 	}
 	
 }

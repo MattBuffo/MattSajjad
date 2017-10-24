@@ -23,7 +23,7 @@ public class Barcode {
 	}
 	//Constructors 
 	public Barcode(ZipCode code) {
-		
+
 	}
 	/**Constructs a Barcode object with the instance element barCode set to the passed string with the first and last characters removed
 	 * 
@@ -42,7 +42,7 @@ public class Barcode {
 		if(checkSum) {
 			zipCode = new ZipCode(zipCodeWithCheck.substring(0, zipCodeWithCheck.length() -1));
 		}
-		
+
 	}
 	// Getter Methods (Accessor) 
 	/** Gets the zipCode Object
@@ -100,17 +100,17 @@ public class Barcode {
 			checkSum = true;
 		}
 		else {
-			 checkSum = false;
+			checkSum = false;
 		}
 	}
 	/**
 	 * Converts a the string instance variable barcode to an instance array of five bar segments
 	 */
 	private void convertToSegments(){
-		
+
 		for(int i = 0; i < barCode.length(); i ++) {
 			barCodeAsSegments[i/5] += barCode.charAt(i);
-			
+
 		}
 	}
 	/**
@@ -129,21 +129,21 @@ public class Barcode {
 					segment = segment.substring(0, i) + "0" + segment.substring(i+1);
 				}
 			}
-			
+
 			if((Integer.parseInt(segment.substring(0,1)) * 7) 
-				+ (Integer.parseInt(segment.substring(1,2)) * 4) 
-				+ (Integer.parseInt(segment.substring(2,3)) * 2)
-				+ (Integer.parseInt(segment.substring(3,4))) == 11) {
+					+ (Integer.parseInt(segment.substring(1,2)) * 4) 
+					+ (Integer.parseInt(segment.substring(2,3)) * 2)
+					+ (Integer.parseInt(segment.substring(3,4))) == 11) {
 				zipCodeWithCheck += 0;
 			}
 			else {
 				zipCodeWithCheck += ((Integer.parseInt(segment.substring(0,1)) * 7) 
-				+ (Integer.parseInt(segment.substring(1,2)) * 4) 
-				+ (Integer.parseInt(segment.substring(2,3)) * 2)
-				+ Integer.parseInt(segment.substring(3,4)));
-				}
-				
-			
+						+ (Integer.parseInt(segment.substring(1,2)) * 4) 
+						+ (Integer.parseInt(segment.substring(2,3)) * 2)
+						+ Integer.parseInt(segment.substring(3,4)));
+			}
+
+
 		}
 	}
 	public String toString() {
@@ -160,6 +160,12 @@ public class Barcode {
 				returnStr += segment + " ";
 			}
 			returnStr += "| \n";
+			returnStr += "Matching Cities: \n";
+
+			Location[] tempLocations = zipCode.getLocation();
+			for(Location place : tempLocations) {
+				returnStr += place.toString() + "\n";
+			}
 			return returnStr;
 		}
 	}

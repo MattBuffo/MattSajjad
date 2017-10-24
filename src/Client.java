@@ -15,17 +15,35 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Client {
-	
+	/** Creates and prints arrays of ZipCode and Barcode objects derived from the files ZopCodes.txt and BarCodes.txt respectively
+	 * 
+	 * @param args
+	 * @throws FileNotFoundException
+	 */
 	public static void main(String[] args) throws FileNotFoundException{
+		//Variable declarations
 		File ZipCodes = new File("ZipCodes.txt");
-		File ZipCodesCity = new File("ZipCodesCity.txt");
 		File ZipBarCodes = new File("ZipBarCodes.txt");
-		ZipCode[] zipCodeArray = new ZipCode[10];
+		ZipCode[] zipCodeArray = new ZipCode[10]; //These values are hardcoded to save execution time and for the sake of simplicity, I recognize in the industry this is bad practice but I figured I'd save a bit of your time
 		Barcode[] barCodeArray = new Barcode[10];
-		Scanner in = new Scanner(ZipBarCodes);
+		Scanner in;
+
+		//Creation of arrays
+		in = new Scanner(ZipBarCodes);
 		for(Barcode bar : barCodeArray) {
 			bar = new Barcode(in.next());
-			System.out.println(bar);
+		}
+		in = new Scanner(ZipCodes);
+		for(ZipCode zip : zipCodeArray) {
+			zip = new ZipCode(in.next());
+		}
+
+		//Printing of Arrays
+		for(int i = 0; i < zipCodeArray.length; i ++) {
+			System.out.println("Zip Code " + i + ": \n" + zipCodeArray[i]);
+		}
+		for(int i = 0; i < barCodeArray.length; i ++) {
+			System.out.println("Bar Code " + i + ": \n" + barCodeArray[i]);
 		}
 	}
 }
