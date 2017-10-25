@@ -19,6 +19,8 @@ public class Client {
 	 * 
 	 * @param args
 	 * @throws FileNotFoundException
+	 * @preconditions none
+	 * @postconditions all parts of the project are printed and arrays of zipcodes and barcodes constructed 
 	 */
 	public static void main(String[] args) throws FileNotFoundException{
 		//Variable declarations
@@ -30,13 +32,15 @@ public class Client {
 
 		//Creation of arrays
 		in = new Scanner(ZipBarCodes);
-		for(Barcode bar : barCodeArray) {
-			bar = new Barcode(in.next());
+		for(int i = 0; i < barCodeArray.length; i ++) {
+			barCodeArray[i] = new Barcode(in.next());
 		}
+	
 		in = new Scanner(ZipCodes);
-		for(ZipCode zip : zipCodeArray) {
-			zip = new ZipCode(in.next());
+		for(int i = 0; i <zipCodeArray.length; i++) {
+			zipCodeArray[i] = new ZipCode(in.next());
 		}
+	
 
 		//Printing of Arrays
 		for(int i = 0; i < zipCodeArray.length; i ++) {
@@ -44,6 +48,7 @@ public class Client {
 		}
 		for(int i = 0; i < barCodeArray.length; i ++) {
 			System.out.println("Bar Code " + i + ": \n" + barCodeArray[i]);
+		
 		}
 	}
 }
