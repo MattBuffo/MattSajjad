@@ -6,14 +6,19 @@ public class ZipCode {
 
 	private String zipCode;
 	private Location[] place;
-	
+	private String barcode;
+	private File ZipCodesCity;
+	private int checkSum;
+
 	public ZipCode(String code)
 	{
 		place = new Location[25];
 		zipCode = code;
+		ZipCodesCity = new File("ZipCodesCity.txt");
+		barcode = "";
 	}
-	
-	public String getZipCode(File ZipCodes) throws FileNotFoundException
+
+	/**public String getZipCode(File ZipCodes) throws FileNotFoundException
 	{
 		Scanner zipReader = new Scanner(System.in);
 		File file = new File(zipReader.nextLine());
@@ -24,56 +29,91 @@ public class ZipCode {
 		zipReader.close();
 		return zipCode;
 	}
-	
-	public String getLocation(File ZipCodesCity)
+	 **/ //redundant method
+
+	private void setLocation()
 	{
 		Scanner cityReader = new Scanner(System.in);
 		File file = new File(cityReader.nextLine());
 		cityReader = new Scanner(ZipCodesCity);
-		while (cityReader.hasNext()) {
-			place = cityReader.next();
-		}
-	}
-	
-	public String convertToBarcode()
-	{
-		String barcodeDigit;
-		switch (barcodeCreator) {
-			case 0: barcodeDigit = ":::||";
-			case 1: barcodeDigit = "::|:|";
-			case 2: barcodeDigit = "";
-			case 3: barcodeDigit = "";
-			case 4: barcodeDigit = "";
-			case 5: barcodeDigit = "";
-			case 6: barcodeDigit = "";
-			case 7: barcodeDigit = "";
-			case 8: barcodeDigit = "";
-			case 9: barcodeDigit = "";
-			default: barcodeDigit = "Invalid Input";
-		
-		}
-	}
-	
-	public String toString()
-	{
-		
+		for (int i = 0; i < place.length; i++ )
+			while (cityReader.hasNext()) {
+				String location = cityReader.next();
+				if (location.substring(0, 6).equals(zipCode)) {
+					place[i] = new Location(location);
+				}
+			}
 	}
 
-/*	public String getZipCode() {
+	public String convertToBarcode(int n)
+	{
+		switch (n) {
+		case 0: return ":::||";
+		case 1: return "::|:|";
+		case 2: return "::|:|";
+		case 3: return "::||:";
+		case 4: return ":|::|";
+		case 5: return ":|:|:";
+		case 6: return ":||::";
+		case 7: return "|:::|";
+		case 8: return "|::|:";
+		case 9: return "|:|::";
+		default: return "Invalid Input";
+
+		}
+	}
+	
+	private void getCheckSum() {
+		int sum = 0;
+		for(int i = 0; i<zipCode.length(); i++) {
+			sum += zipCode.charAt(i);
+		}
+		if (sum%10 != 0) {
+			checkSum = 10 - sum%10;
+		}
+		else {
+			checkSum = 0;
+		}
+	}
+
+	private void getBarcode() {
+		for(int i = 0; i<zipCode.length(); i++) {
+			barcode += convertToBarcode(zipCode.charAt(i));
+		}
+		barcode += convertToBarcode(checkSum);
+	}
+
+	/*	public String getZipCode() {
 		return zipCode;
 	}
-*/
+	 */
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 
 	public Location[] getPlace() {
-		return Place;
+		return place;
 	}
 
 	public void setPlace(Location[] place) {
-		Place = place;
+		this.place = place;
 	}
+
+	public String toString()
+	{
+
+		String returnStr = "";
+		returnStr += ("ZipCode: " + zipCode + "\n");
+		returnStr += ("Postal BarCode: " + "|" + barcode + "|" + "\n");
+		returnStr += ("Readable Barcode: | ");
+
+		}
+		return returnStr;
+		returnStr += "| \n";
+		return returnStr;
+
+	}
+}
 
 
 }
