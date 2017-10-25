@@ -8,12 +8,14 @@ public class ZipCode {
 	private Location[] place;
 	private String barcode;
 	private File ZipCodesCity;
+	private int checkSum;
 
 	public ZipCode(String code)
 	{
 		place = new Location[25];
 		zipCode = code;
 		ZipCodesCity = new File("ZipCodesCity.txt");
+		barcode = "";
 	}
 
 	/**public String getZipCode(File ZipCodes) throws FileNotFoundException
@@ -27,20 +29,20 @@ public class ZipCode {
 		zipReader.close();
 		return zipCode;
 	}
-**/ //redundant method
-	
+	 **/ //redundant method
+
 	private void setLocation()
 	{
 		Scanner cityReader = new Scanner(System.in);
 		File file = new File(cityReader.nextLine());
 		cityReader = new Scanner(ZipCodesCity);
 		for (int i = 0; i < place.length; i++ )
-		while (cityReader.hasNext()) {
-			String location = cityReader.next();
-			if (location.substring(0, 6).equals(zipCode)) {
-				place[i] = new Location(location);
+			while (cityReader.hasNext()) {
+				String location = cityReader.next();
+				if (location.substring(0, 6).equals(zipCode)) {
+					place[i] = new Location(location);
+				}
 			}
-		}
 	}
 
 	public String convertToBarcode(int n)
@@ -60,8 +62,26 @@ public class ZipCode {
 
 		}
 	}
+	
+	private void getCheckSum() {
+		int sum = 0;
+		for(int i = 0; i<zipCode.length(); i++) {
+			sum += zipCode.charAt(i);
+		}
+		if (sum%10 != 0) {
+			checkSum = 10 - sum%10;
+		}
+		else {
+			checkSum = 0;
+		}
+	}
 
-	public String getBarcode()
+	private void getBarcode() {
+		for(int i = 0; i<zipCode.length(); i++) {
+			barcode += convertToBarcode(zipCode.charAt(i));
+		}
+		barcode += convertToBarcode(checkSum);
+	}
 
 	/*	public String getZipCode() {
 		return zipCode;
@@ -72,30 +92,26 @@ public class ZipCode {
 	}
 
 	public Location[] getPlace() {
-		return Place;
+		return place;
 	}
 
 	public void setPlace(Location[] place) {
-		Place = place;
+		this.place = place;
 	}
 
 	public String toString()
 	{
-		if(!checkSum) {
-			return ("|" + barCode + "|" + "------>" + "ERROR: INVALID CHECKSUM");
+
+		String returnStr = "";
+		returnStr += ("ZipCode: " + zipCode + "\n");
+		returnStr += ("Postal BarCode: " + "|" + barcode + "|" + "\n");
+		returnStr += ("Readable Barcode: | ");
+
 		}
-		else {
-			String returnStr = "";
-			returnStr += ("ZipCode: " + this.getZipCode(File ZipCodes) + "\n");
-			returnStr += ("Postal BarCode: " + "|" + this.getBarCode() + "|" + "\n");
-			returnStr += ("Readable Barcode: | ");
-			String[] tempBar = this.getBarCodeAsSegments();
-			for(String segment: tempBar) {
-				returnStr += segment + " ";
-			}
-			returnStr += "| \n";
-			return returnStr;
-		}
+		return returnStr;
+		returnStr += "| \n";
+		return returnStr;
+
 	}
 }
 
