@@ -1,3 +1,8 @@
+/**
+ * @author Sajjad Shuaybi
+ * 
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -7,6 +12,7 @@ public class ZipCode {
 	private String zipCode;
 	private Location[] place;
 	private String barcode;
+	private String readableBarcode;
 	private File ZipCodesCity;
 	private int checkSum;
 
@@ -62,7 +68,7 @@ public class ZipCode {
 
 		}
 	}
-	
+
 	private void getCheckSum() {
 		int sum = 0;
 		for(int i = 0; i<zipCode.length(); i++) {
@@ -83,10 +89,13 @@ public class ZipCode {
 		barcode += convertToBarcode(checkSum);
 	}
 
-	/*	public String getZipCode() {
-		return zipCode;
+	private void getReadableBarcode() {
+		for(int i = 0; i<zipCode.length(); i++) {
+			readableBarcode += convertToBarcode(zipCode.charAt(i)) + " ";
+		}
+		readableBarcode += convertToBarcode(checkSum) + " ";
 	}
-	 */
+
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
@@ -105,15 +114,18 @@ public class ZipCode {
 		String returnStr = "";
 		returnStr += ("ZipCode: " + zipCode + "\n");
 		returnStr += ("Postal BarCode: " + "|" + barcode + "|" + "\n");
-		returnStr += ("Readable Barcode: | ");
+		returnStr += ("Readable Barcode: | " + readableBarcode + "|" + "\n");
 
+		returnStr += "Matching Cities: \n";
+
+		Location[] tempLocations = this.getPlace();
+		for(Location place : tempLocations) {
+			returnStr += place.toString() + "\n";
 		}
-		return returnStr;
-		returnStr += "| \n";
 		return returnStr;
 
 	}
-}
+
 
 
 }
