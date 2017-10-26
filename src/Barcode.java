@@ -31,7 +31,10 @@ public class Barcode {
 	 * @postconditions Barcode object constructed and all instance data declared
 	 */
 	public Barcode(ZipCode code) {
-		
+		barCode = code.getBarcode();
+		convertToSegments();
+		convertToZip();
+		checkSum();
 	}
 	/**Constructs a Barcode object with the instance element barCode set to the passed string with the first and last characters removed
 	 * 
@@ -148,7 +151,7 @@ public class Barcode {
 	private void convertToZip() {
 
 		String[] tempArray = barCodeAsSegments;
-		String tempCode = "";
+		
 		for(String segment : tempArray) {
 			for(int i = 0; i < segment.length(); i ++) {
 				if(segment.charAt(i) == '|') {
@@ -188,7 +191,7 @@ public class Barcode {
 	 */
 	public String toString() {
 		if(!checkSum) {
-			return ("|" + barCode + "|" + "------>" + "ERROR: INVALID CHECKSUM");
+			return ("|" + barCode + "|" + "------>" + "ERROR: INVALID CHECKSUM \n");
 		}
 		else {
 			String returnStr = "";
@@ -202,10 +205,10 @@ public class Barcode {
 			returnStr += "| \n";
 			returnStr += "Matching Cities: \n";
 
-			/*Location[] tempLocations = zipCode.getPlace();
+			Location[] tempLocations = zipCode.getPlace();
 			for(Location place : tempLocations) {
-				returnStr += place.toString() + "\n";
-			}*/
+				if(place != null) returnStr += place.toString();
+			}
 			return returnStr;
 		}
 	}

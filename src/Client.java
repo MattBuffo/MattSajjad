@@ -27,27 +27,28 @@ public class Client {
 		File ZipCodes = new File("ZipCodes.txt");
 		File ZipBarCodes = new File("ZipBarCodes.txt");
 		ZipCode[] zipCodeArray = new ZipCode[10]; //These values are hardcoded to save execution time and for the sake of simplicity, I recognize in the industry this is bad practice but I figured I'd save a bit of your time
-		Barcode[] barCodeArray = new Barcode[10];
+		Barcode[] barCodeArray = new Barcode[11];
 		Scanner in;
 
 		//Creation of arrays
 		in = new Scanner(ZipBarCodes);
+		
 		for(int i = 0; i < barCodeArray.length; i ++) {
 			barCodeArray[i] = new Barcode(in.next());
 		}
-	
+		in.close();
 		in = new Scanner(ZipCodes);
 		for(int i = 0; i <zipCodeArray.length; i++) {
 			zipCodeArray[i] = new ZipCode(in.next());
 		}
-	
+		in.close();
 
 		//Printing of Arrays
 		for(int i = 0; i < zipCodeArray.length; i ++) {
-			System.out.println("Zip Code " + i + ": \n" + zipCodeArray[i]);
+			System.out.println("Zip Code " + (i+1) + ": \n" + zipCodeArray[i]);
 		}
 		for(int i = 0; i < barCodeArray.length; i ++) {
-			System.out.println("Bar Code " + i + ": \n" + barCodeArray[i]);
+			System.out.println("Bar Code " + (i+1) + ": \n" + barCodeArray[i]);
 		
 		}
 	}

@@ -11,7 +11,7 @@ public class Location {
 	}
 	public Location(String location)
 	{
-		city = location.substring(7, location.length() -3);
+		city = location.substring(6, location.length() -3);
 		state = location.substring(location.length()-2);
 	}
 

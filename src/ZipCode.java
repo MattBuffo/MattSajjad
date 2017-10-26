@@ -16,12 +16,19 @@ public class ZipCode {
 	private File ZipCodesCity;
 	private int checkSum;
 
-	public ZipCode(String code)
+	public ZipCode(String code) 
 	{
+		
 		place = new Location[25];
 		zipCode = code;
-		ZipCodesCity = new File("ZipCodesCity.txt");
 		barcode = "";
+		setBarcode();
+		setReadableBarcode();
+		ZipCodesCity = new File("ZipCodesCity.txt");
+		setLocation();
+		
+		
+		
 	}
 
 	/**public String getZipCode(File ZipCodes) throws FileNotFoundException
@@ -37,18 +44,27 @@ public class ZipCode {
 	}
 	 **/ //redundant method
 
-	private void setLocation()
+	private void setLocation() 
 	{
-		Scanner cityReader = new Scanner(System.in);
-		File file = new File(cityReader.nextLine());
-		cityReader = new Scanner(ZipCodesCity);
-		for (int i = 0; i < place.length; i++ )
-			while (cityReader.hasNext()) {
-				String location = cityReader.next();
-				if (location.substring(0, 6).equals(zipCode)) {
+		
+		try {
+			Scanner cityReader = new Scanner(ZipCodesCity);
+		
+		for (int i = 0; i < place.length; i++ ){
+			boolean tempBool = false;
+			while (cityReader.hasNextLine() && !(tempBool)) {
+				String location = cityReader.nextLine();
+				if(location.substring(0, 5).equals(zipCode)) {
 					place[i] = new Location(location);
+					tempBool = true;
 				}
 			}
+		}
+		cityReader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String convertToBarcode(int n)
@@ -82,18 +98,21 @@ public class ZipCode {
 		}
 	}
 
-	private void getBarcode() {
+	public void setBarcode() {
 		for(int i = 0; i<zipCode.length(); i++) {
-			barcode += convertToBarcode(zipCode.charAt(i));
+			barcode += convertToBarcode(Integer.parseInt(zipCode.substring(i,i+1)));
 		}
 		barcode += convertToBarcode(checkSum);
 	}
-
-	private void getReadableBarcode() {
-		for(int i = 0; i<zipCode.length(); i++) {
-			readableBarcode += convertToBarcode(zipCode.charAt(i)) + " ";
+	public String getBarcode() {
+		return barcode;
+	}
+	private void setReadableBarcode() {
+		readableBarcode = "";
+		for(int i = 0; i<barcode.length(); i+=5) {
+			
+			readableBarcode += barcode.substring(i , i+5) + " ";
 		}
-		readableBarcode += convertToBarcode(checkSum) + " ";
 	}
 
 	public void setZipCode(String zipCode) {
@@ -118,9 +137,10 @@ public class ZipCode {
 
 		returnStr += "Matching Cities: \n";
 
-		Location[] tempLocations = this.getPlace();
-		for(Location place : tempLocations) {
-			returnStr += place.toString() + "\n";
+		for(Location location : place) {
+			if(location != null) {
+				returnStr += location;
+			}
 		}
 		return returnStr;
 
