@@ -10,22 +10,22 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ZipCode {
-
+	//instance data
 	private String zipCode;
 	private Location[] place;
 	private String barcode;
 	private String readableBarcode;
 	private File ZipCodesCity;
 	private int checkSum;
-/**
- * constructor method
- * @preconditions none
- * @postconditions none
- * @param code - zipcode object
- */
+	/**
+	 * constructor method
+	 * @preconditions none
+	 * @postconditions none
+	 * @param code - zipcode object
+	 */
 	public ZipCode(String code) 
 	{
-		
+
 		place = new Location[25];
 		zipCode = code;
 		barcode = "";
@@ -33,9 +33,7 @@ public class ZipCode {
 		setReadableBarcode();
 		ZipCodesCity = new File("ZipCodesCity.txt");
 		setLocation();
-		
-		
-		
+
 	}
 
 	/**public String getZipCode(File ZipCodes) throws FileNotFoundException
@@ -49,7 +47,7 @@ public class ZipCode {
 		zipReader.close();
 		return zipCode;
 	}
-	 **/ //redundant method
+	 **/ //redundant method, barcode class is already doing this-miscommunication
 
 	/**
 	 * setter method that adds to the locations from the zipcodes
@@ -57,33 +55,34 @@ public class ZipCode {
 	 */
 	private void setLocation() 
 	{
-		
+
 		try {
 			Scanner cityReader = new Scanner(ZipCodesCity); //read in the file of locations
-		
-		for (int i = 0; i < place.length; i++ ){
-			boolean tempBool = false;
-			
-			while (cityReader.hasNextLine() && !(tempBool)) {
-				String location = cityReader.nextLine();
-				
-				if(location.substring(0, 5).equals(zipCode)) {
-					place[i] = new Location(location);
-					tempBool = true;
+
+			//creation of the array of locations
+			for (int i = 0; i < place.length; i++ ){
+				boolean tempBool = false;
+
+				while (cityReader.hasNextLine() && !(tempBool)) {
+					String location = cityReader.nextLine();
+
+					if(location.substring(0, 5).equals(zipCode)) {
+						place[i] = new Location(location);
+						tempBool = true;
+					}
 				}
 			}
-		}
-		cityReader.close();
+			cityReader.close();
 		} catch (FileNotFoundException e) { //fixes the scanner leak error
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-/**
- * 
- * @param n, n is each digit of the zipcode
- * @return the matching barcode segment to be built later
- */
+	/**
+	 * 
+	 * @param n, n is each digit of the zipcode
+	 * @return the matching barcode segment - to be built later
+	 */
 	public String convertToBarcode(int n)
 	{
 		switch (n) {
@@ -104,7 +103,7 @@ public class ZipCode {
 	/**
 	 * modifies the checksum instance data
 	 * to be used for barcode construction
-	 * 
+	 * @preconditions zipcode must be declared and initialized
 	 */
 
 	private void getCheckSum() {
@@ -119,7 +118,7 @@ public class ZipCode {
 			checkSum = 0;
 		}
 	}
-	
+
 	/**
 	 * constructs the barcode using the segments and checksum
 	 * @preconditons zipcode must be declared and initialized
@@ -132,19 +131,19 @@ public class ZipCode {
 		}
 		barcode += convertToBarcode(checkSum);
 	}
-	
+
 	/**
 	 * getter method for barcode object
 	 * @preconditions barcode object must be instantiated
 	 * @returns initalized barcode
 	 */
-	
+
 	public String getBarcode() {
 		return barcode;
 	}
-	
+
 	/**
-	 * @preconditions barcode object must be intstantiated and initialized
+	 * @preconditions barcode object must be instantiated and initialized
 	 * setter method that creates a readable barcode
 	 * @postconditions no return method, modifies readablebarcode instance data
 	 * 
@@ -152,7 +151,7 @@ public class ZipCode {
 	private void setReadableBarcode() {
 		readableBarcode = "";
 		for(int i = 0; i<barcode.length(); i+=5) {
-			
+
 			readableBarcode += barcode.substring(i, i+5) + " "; //adds space after each segment
 		}
 	}
@@ -183,11 +182,13 @@ public class ZipCode {
 	/**
 	 * tostring method
 	 * prints all the project requirements with correct formatting
+	 * @preconditions all the above methods must have fulfilled their intended roles
+	 * @postconditions none
 	 */
 
 	public String toString()
 	{
-
+//build one big string with all the required output
 		String returnStr = "";
 		returnStr += ("ZipCode: " + zipCode + "\n");
 		returnStr += ("Postal BarCode: " + "|" + barcode + "|" + "\n");
